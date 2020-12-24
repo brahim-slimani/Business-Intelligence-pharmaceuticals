@@ -1,0 +1,44 @@
+<Schema name="cubeMed">
+  <Dimension visible="true" highCardinality="false" name="OLAP QUALITE">
+    <Hierarchy name="ALL QUALITE" visible="true" hasAll="true" primaryKey="id_qualite">
+      <Table name="olap_qualite">
+      </Table>
+      <Level name="QUALITE" visible="true" column="qualite" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="OLAP TEMPS">
+    <Hierarchy name="ALL ANNEE" visible="true" hasAll="true" primaryKey="id_temps">
+      <Table name="olap_temps">
+      </Table>
+      <Level name="ANNEE" visible="true" column="annee" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="MOIS" visible="true" column="mois" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="OLAP VILLE">
+    <Hierarchy name="ALL WILAYA" visible="true" hasAll="true" primaryKey="id_ville">
+      <Table name="olap_ville">
+      </Table>
+      <Level name="WILAYA" visible="true" table="olap_ville" column="wilaya" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="VILLE" visible="true" table="olap_ville" column="ville" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="FAIS_MED" visible="true" cache="true" enabled="true">
+    <Table name="olap_fais_med">
+    </Table>
+    <DimensionUsage source="OLAP QUALITE" name="OLAP QUALITE" visible="true" foreignKey="id_qualite" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="OLAP TEMPS" name="OLAP TEMPS" visible="true" foreignKey="id_temps" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="OLAP VILLE" name="OLAP VILLE" visible="true" foreignKey="id_ville" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="QTE" column="qte" formatString="#######.###" aggregator="sum">
+    </Measure>
+    <Measure name="PRIX" column="prix" formatString="#######.###" aggregator="sum">
+    </Measure>
+  </Cube>
+</Schema>
